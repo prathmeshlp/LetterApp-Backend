@@ -10,12 +10,7 @@ import letterRoutes from "./routes/letter";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://letter-app-client.vercel.app",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(
   session({
@@ -32,7 +27,7 @@ app.use("/auth", authRoutes);
 app.use("/letters", letterRoutes);
 
 app.get("/", (req, res) => {
-  res.json(`Server is running o0n Port port ${process.env.PORT}`);
+  res.json(`Server is running on Port port ${process.env.PORT}`);
 });
 
 mongoose
@@ -45,8 +40,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// console.log(process.env.GOOGLE_CLIENT_ID);
-// console.log(process.env.GOOGLE_CLIENT_SECRET);
-// console.log(process.env.MONGODB_URI);
-// console.log(process.env.SESSION_SECRET);
-// console.log(process.env.PORT);
+
