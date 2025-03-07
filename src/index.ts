@@ -12,7 +12,7 @@ import letterRoutes from './routes/letter';
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'letter-app-client.vercel.app',
   credentials: true
 }));
 app.use(express.json());
