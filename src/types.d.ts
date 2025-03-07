@@ -20,4 +20,17 @@ declare module "passport-google-oauth20" {
       ) => void
     );
   }
+
+
+  declare module 'passport' {
+    interface AuthenticateOptions {
+      accessType?: 'online' | 'offline';
+      prompt?: string;
+      scope?: string[];
+    }
+  }
+
 }
+
+
+// Extend passport's AuthenticateOptions
