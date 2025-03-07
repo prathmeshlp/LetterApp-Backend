@@ -1,5 +1,5 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { IUser, User } from "../models/User";
 
 passport.serializeUser((user: any, done) => {
