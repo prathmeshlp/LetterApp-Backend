@@ -10,10 +10,10 @@ router.get('/google', passport.authenticate('google', {
 
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:5173' }),
+  passport.authenticate('google', { failureRedirect: 'https://letter-app-client.vercel.app' }),
   (req: Request, res: Response) => {
     
-    res.redirect('http://localhost:5173/dashboard');
+    res.redirect('https://letter-app-client.vercel.app/dashboard');
   }
 );
 
