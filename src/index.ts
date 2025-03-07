@@ -31,6 +31,10 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use("/letters", letterRoutes);
 
+app.get("/", (req, res) => {
+  res.json(`Server is running o0n Port port ${process.env.PORT}`);
+});
+
 mongoose
   .connect(process.env.MONGODB_URI!)
   .then(() => console.log("Connected to MongoDB"))
