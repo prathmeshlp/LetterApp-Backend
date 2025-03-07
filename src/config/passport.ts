@@ -1,5 +1,5 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20'; 
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { IUser, User } from "../models/User";
 
 passport.serializeUser((user: any, done) => {
@@ -21,8 +21,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       callbackURL: "http://localhost:5000/auth/google/callback",
-      accessType: "offline",  
-      prompt: 'consent',
+      accessType: "offline",
+      prompt: "consent",
       scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
     },
     async (
@@ -32,8 +32,8 @@ passport.use(
       done: (err: any, user?: IUser) => void
     ) => {
       try {
-        console.log(refreshToken,"refreshToken");
-        console.log(accessToken,"accessToken");
+        console.log(refreshToken, "refreshToken");
+        console.log(accessToken, "accessToken");
         let user = await User.findOne({ googleId: profile.id });
         if (user) {
           user.refreshToken = refreshToken;
