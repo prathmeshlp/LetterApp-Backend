@@ -10,14 +10,17 @@ import letterRoutes from "./routes/letter";
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URI, credentials: true }));
+app.use(cors({
+  origin: 'https://letter-app-client.vercel.app',
+  credentials: true
+}));
 app.use(express.json());
 app.use(
   session({
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: { secure: process.env.NODE_ENV === 'production' }
   })
 );
 app.use(passport.initialize());
@@ -30,12 +33,36 @@ app.get("/", (req, res) => {
   res.json(`Server is running on Port port ${process.env.PORT}`);
 });
 
-mongoose
-  .connect(process.env.MONGODB_URI!)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+let dbConnected = false;
+const connectDB = async () => {
+  if (dbConnected) return;
+  try {
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/letterapp', {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000
+    });
+    dbConnected = true;
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    throw err; 
+  }
+};
+
+// Middleware to ensure DB connection
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+module.exports = app;
