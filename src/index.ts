@@ -10,14 +10,14 @@ import letterRoutes from "./routes/letter";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URI, credentials: true }));
 app.use(express.json());
 app.use(
   session({
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === "production" },
+    cookie: { secure: false },
   })
 );
 app.use(passport.initialize());
@@ -39,5 +39,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-

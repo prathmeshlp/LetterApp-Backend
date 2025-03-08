@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Letter, ILetter } from '../models/Letter';
+import { Letter } from '../models/Letter';
 import { IUser } from '../models/User';
 import { saveLetterToDrive, getLetterFromDrive } from '../services/googleDrive';
 

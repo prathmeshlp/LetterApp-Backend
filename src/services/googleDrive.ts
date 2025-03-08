@@ -6,7 +6,7 @@ export const getDriveClient = async (user: IUser): Promise<OAuth2Client> => {
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    'https://letterappbackend.vercel.app/auth/google/callback',
+    `${process.env.SERVER_URI}/auth/google/callback`,
     
     
   );

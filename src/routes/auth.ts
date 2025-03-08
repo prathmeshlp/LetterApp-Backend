@@ -5,15 +5,16 @@ const router = express.Router();
 
 router.get('/google', passport.authenticate('google', {
   scope: ['profile', 'email', 'https://www.googleapis.com/auth/drive.file'],
-  accessType: 'offline'
-}));
+  // accessType: 'offline',
+  // prompt: 'consent',
+} as any));
 
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: 'https://letter-app-client.vercel.app' }),
+  passport.authenticate('google', { failureRedirect: `${process.env.CLIENT_URI}` }),
   (req: Request, res: Response) => {
     
-    res.redirect('https://letter-app-client.vercel.app/dashboard');
+    res.redirect(`${process.env.CLIENT_URI}/dashboard`);
   }
 );
 
